@@ -1,0 +1,9 @@
+{
+  "name": "Flutter App",
+  "image": "cirrusci/flutter:2.2.0",
+  "extensions": [
+    "dart-code.dart-code",
+    "dart-code.flutter"
+  ],
+  "postStartCommand": "adb connect 192.168.0.111:5555"
+}

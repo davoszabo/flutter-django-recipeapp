@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+
+  # FOR NGINX 
+  nginx-prod:
+    build: 
+      context: ./pto-forecaster-frontend/
+      dockerfile: Dockerfile.prod
+    container_name: prod_forecaster_nginx
+    restart: always
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 80:80
+    depends_on:
+      - django-prod
+
+  # angular-prod:
+  #   build:
+  #     context: ./pto-forecaster-frontend
+  #     dockerfile: Dockerfile
+  #   container_name: prod_forecaster_angular
+  #   command: ng serve
+  #   volumes:
+  #     - ./pto-forecaster-frontend/src/:/usr/src/angular/
+  #   ports:
+  #     - "4200:4200"
+
+  django-prod:
+    build:
+      context: ./ts-pto-forecaster/
+      dockerfile: Dockerfile.prod
+    container_name: prod_forecaster_django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./ts-pto-forecaster/:/usr/src/app/
+    ports:
+      - "8000:8000"
+    # env_file:
+    #   - ./.env/.env.prod
+    depends_on:
+      - db-prod
+    
+  db-prod:
+    image: postgres:11
+    container_name: prod_forecaster_postgres
+    volumes:
+      - prod_postgres_data:/var/lib/postgresql/prod_data/
+    environment:
+      - DEBUG=1 # LET PORT 8000 UNACCESSABLE
+      - POSTGRES_USER=Forecasteruser
+      - POSTGRES_PASSWORD=djS0rg0KvSO
+      - POSTGRES_DB=Forecaster
+    ports:
+      - "5432:5432" # FOR OUTSIDE CONNECTION
+  
+  pgadmin:
+    container_name: prod_forecaster_pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+
+volumes:
+  prod_postgres_data:
+  static_volume:
+  media_volume:
