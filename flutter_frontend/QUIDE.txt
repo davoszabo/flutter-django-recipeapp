@@ -1,9 +1,9 @@
-Connect Android phone to PC via USB
-It is important to connect device to PC before starting the remote dev container!
+# Connect Android phone to PC via USB
+# It is important to connect device to PC before starting the remote dev container!
 adb tcpip 5555
 adb connect 192.168.0.111:5555
 adb devices
 
-Connect frontend container to host machine on port 8000 (Django backend)
-If you are using real device, you have to set up: Network & Internet setting > connected WiFi name > Set public to private 
+# Connect frontend container to host machine on port 8000 (Django backend)
+# If you are using real device, you have to set up: Network & Internet setting > connected WiFi name > Set public to private 
 adb reverse tcp:8000 tcp:8000

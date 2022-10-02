@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../global/globals.dart';
+
 // import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
@@ -29,6 +31,8 @@ class Auth with ChangeNotifier {
     }
     return null;
   }
+
+  final url = Globals.url;
 
   // Future<void> _authenticate(
   //     String username, String email=null, String password, String urlSegment) async {
@@ -70,10 +74,10 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(String username, String email, String password) async {
     Map<String, String> header = {"Content-Type": "application/json"};
-    var url = 'http://192.168.0.109:8000/api/auth/register';
+    var finalUrl = '$url/api/auth/register';
     try {
       var response = await http.post(
-        Uri.parse(url),
+        Uri.parse(finalUrl),
         headers: header,
         body: json.encode({
           'username': username,
@@ -94,11 +98,11 @@ class Auth with ChangeNotifier {
 
   Future<void> login(String username, String password) async {
     Map<String, String> header = {"Content-Type": "application/json"};
-    var url = 'http://192.168.0.109:8000/api/auth/authenticate';
+    var finalUrl = '$url/api/auth/authenticate';
     try {
       var response = await http
           .post(
-            Uri.parse(url),
+            Uri.parse(finalUrl),
             headers: header,
             body: json.encode({
               'username': username,

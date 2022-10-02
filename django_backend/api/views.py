@@ -8,6 +8,12 @@ from .filters import RecipeFilter
 from .models import Recipe, Profile
 from .serializers import RecipeListSerializer, RecipeDetailSerializer
 
+import sys
+sys.path.append('../')
+
+from recsys.recrecsys import RecRecSys  
+from django.db.models import Case, When
+
 # from rest_framework import permissions
 
 class RecipeViewSet(viewsets.ViewSet):
@@ -20,7 +26,7 @@ class RecipeViewSet(viewsets.ViewSet):
         #queryset = Recipe.objects.all()#.order_by('?')[:10]
         print(request.GET)
         filter_query = RecipeFilter(request.GET, queryset=Recipe.objects.all().order_by("?"))
-        serializer = RecipeListSerializer(filter_query.qs[:10], many=True)
+        serializer = RecipeListSerializer(filter_query.qs[:30], many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -69,5 +75,20 @@ class FavoriteListView(viewsets.ViewSet):
     def list(self, request):
         profile = Profile.objects.get(pk=request.user)
         queryset = profile.favorites.all()
+        serializer = RecipeListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+recsys_model = RecRecSys()
+
+class RecommendListView(viewsets.ViewSet):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        profile = Profile.objects.get(pk=request.user)
+        # rec_list = recsys_model.fit(request.user)
+        rec_list = recsys_model.fit(4379)
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(rec_list)])
+        queryset = Recipe.objects.filter(pk__in=rec_list).order_by(preserved)
         serializer = RecipeListSerializer(queryset, many=True)
         return Response(serializer.data)

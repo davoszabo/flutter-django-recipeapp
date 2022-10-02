@@ -21,6 +21,9 @@ COPY ./requirements.txt .
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
+# Surprise package can only be acquired after numpy is already installed 
+RUN pip install scikit-surprise
+
 # copy entrypoint.sh
 # COPY ./entrypoint.sh .
 # RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh && \

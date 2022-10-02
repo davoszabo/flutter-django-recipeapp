@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
 
+import '../global/globals.dart';
+
 class Favorites with ChangeNotifier {
   List<Recipe> _favitems = [];
 
@@ -17,12 +19,13 @@ class Favorites with ChangeNotifier {
     return [..._favitems];
   }
 
+  final url = Globals.url;
+
   Future<void> fetchFavData() async {
-    final url =
-        Uri.parse('http://192.168.0.109:8000/api/favorites/?format=json');
+    final finalUrl = Uri.parse('$url/api/favorites/?format=json');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
     // print(url);
-    final response = await http.get(url, headers: {
+    final response = await http.get(finalUrl, headers: {
       "Accept": "application/json",
       "Authorization": "Token $token"
     });
@@ -46,11 +49,10 @@ class Favorites with ChangeNotifier {
   }
 
   Future<List<int>> fetchFavIds() async {
-    final url =
-        Uri.parse('http://192.168.0.109:8000/api/favorites/?format=json');
+    final finalUrl = Uri.parse('$url/api/favorites/?format=json');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
     // print(url);
-    final response = await http.get(url, headers: {
+    final response = await http.get(finalUrl, headers: {
       "Accept": "application/json",
       "Authorization": "Token $token"
     });
@@ -71,10 +73,10 @@ class Favorites with ChangeNotifier {
   }
 
   Future<void> toggleFav(int id) async {
-    final url = Uri.parse('http://192.168.0.109:8000/api/togglefav/$id');
+    final finalUrl = Uri.parse('$url/api/togglefav/$id');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
 
-    final response = await http.get(url, headers: {
+    final response = await http.get(finalUrl, headers: {
       "Accept": "application/json",
       "Authorization": "Token $token"
     });

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
 
+import '../global/globals.dart';
+
 class Recipes with ChangeNotifier {
   List<Recipe> _items = [];
 
@@ -17,8 +19,10 @@ class Recipes with ChangeNotifier {
     return [..._items];
   }
 
+  final url = Globals.url;
+
   Future<void> fetchData(List<String> tags, String search) async {
-    final baseUrl = "http://192.168.0.109:8000/api/recipes/?format=json";
+    final baseUrl = "$url/api/recipes/?format=json";
     final tagQuery = (tags.isNotEmpty) ? "&tags=${tags.join('+')}" : "";
     final searchQuery =
         (search.isNotEmpty) ? "&search=${search.replaceAll(' ', '+')}" : "";
@@ -44,12 +48,12 @@ class Recipes with ChangeNotifier {
   }
 
   Future<void> searchFetchData(String searchQuery) async {
-    final url = Uri.parse(
-        'http://192.168.0.109:8000/api/recipes/?format=json&search=$searchQuery');
+    final finalUrl =
+        Uri.parse('$url/api/recipes/?format=json&search=$searchQuery');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
     // print(url);
     final response =
-        await http.get(url, headers: {"Accept": "application/json"});
+        await http.get(finalUrl, headers: {"Accept": "application/json"});
 
     // print(response.statusCode);
     if (response.statusCode == 200) {
@@ -66,12 +70,11 @@ class Recipes with ChangeNotifier {
   }
 
   Future<Recipe> fetchById(int id) async {
-    final url =
-        Uri.parse('http://192.168.0.109:8000/api/recipes/$id/?format=json');
+    final finalUrl = Uri.parse('$url/api/recipes/$id/?format=json');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
 
     final response =
-        await http.get(url, headers: {"Accept": "application/json"});
+        await http.get(finalUrl, headers: {"Accept": "application/json"});
     // print(response.body);
     // await http.get('https://jsonplaceholder.typicode.com/albums');
     // print(response.statusCode);
