@@ -1,14 +1,18 @@
+from ast import Try
 import pandas as pd
 import numpy as np
 import pickle
 from surprise import Dataset
 from surprise import Reader
+from surprise import SVD
+
+path = '/usr/src/app/recsys/'
 
 class RecRecSys:
     def __init__(self):
         # self.recipe_ratings = pd.read_pickle('refined_recipes_2_sample_main.pkl')
-        self.trainset = pickle.load(open('/usr/src/app/recsys/trainset.pkl', 'rb'))
-        self.svd_model = pickle.load(open('/usr/src/app/recsys/recrecsys.pkl', 'rb'))
+        self.trainset = pickle.load(open(f'{path}trainset.pkl', 'rb'))
+        self.svd_model = pickle.load(open(f'{path}recrecsys.pkl', 'rb'))
         self.anti_testset = []
 
     def make_anti_testset(self, raw_user_id):
@@ -38,6 +42,40 @@ class RecRecSys:
 
         recipe_list = pred.head(top_n)['iid'].to_list()
 
-        print(recipe_list)
+        print("[recrecsys::fit] Recommended IDs represented as a list.",recipe_list)
         
         return recipe_list
+
+    def train(self, rec_id, liked_recipes_list):
+        print("[recrecsys::train] Model is being retrained with the new user.")
+        #rec_base_id = 1853000000 
+        #rec_id = rec_base_id + raw_user_id
+
+        df_new_user = pd.DataFrame({"User": rec_id, "Item": liked_recipes_list, "Rating": 5})
+        df_recipe_ratings = pd.read_pickle(f'{path}recipe_ratings.pkl')
+
+        # print(df_recipe_ratings)
+
+        df_concat = pd.concat([df_recipe_ratings, df_new_user], sort=False, ignore_index=True)
+
+        reader = Reader(rating_scale=(0, 5))
+        #data = Dataset.load_from_df(df_recipe_ratings, reader)
+        data = Dataset.load_from_df(df_concat, reader)
+
+        self.trainset = data.build_full_trainset()
+        
+        # pickle.dump(train_set, open('trainset.pkl', 'wb'))
+
+        algo = SVD()
+        algo.fit(self.trainset)
+        self.svd_model = algo
+        # pickle.dump(algo, open('recrecsys.pkl', 'wb'))
+
+    def trainset_contains(self, raw_user_id):
+        try:
+            self.trainset.to_inner_uid(raw_user_id)
+            return True
+        except:
+            print("[recrecsys::trainset_contains] Item is not part of the trainset.")
+            return False
+

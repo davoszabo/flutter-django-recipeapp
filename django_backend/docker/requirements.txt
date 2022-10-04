@@ -13,7 +13,7 @@ psycopg2-binary==2.9.3
 
 # FOR ML ALGORITHM
 numpy==1.21.2
-pandas==1.3.5
+pandas==1.4.2 # to match with jupyter notebooks version
 # scikit-surprise==1.0.2
 # scipy==1.3.2
 # scikit-learn==1.1

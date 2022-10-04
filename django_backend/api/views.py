@@ -85,9 +85,27 @@ class RecommendListView(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        profile = Profile.objects.get(pk=request.user)
+        
         # rec_list = recsys_model.fit(request.user)
-        rec_list = recsys_model.fit(4379)
+        
+        user_id = request.user.id
+        base_id = 1853000000
+        rec_id = user_id + base_id
+        print("[RecommendListView::list] requester user ID: ", user_id)
+        #print("[RecommendListView::list] is user ID in training set: ", recsys_model.trainset_contains(rec_id))
+
+        #rec_id = 2312
+
+        profile = Profile.objects.get(pk=request.user)
+        liked_recipes_list = list(profile.favorites.values_list('pk', flat=True))
+        print("[RecommendListView::list] the user favorite recipe IDs: ", liked_recipes_list)
+        
+        if(not recsys_model.trainset_contains(rec_id)):
+            recsys_model.train(rec_id, liked_recipes_list)
+        
+        rec_list = recsys_model.fit(rec_id)
+        
+        
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(rec_list)])
         queryset = Recipe.objects.filter(pk__in=rec_list).order_by(preserved)
         serializer = RecipeListSerializer(queryset, many=True)
