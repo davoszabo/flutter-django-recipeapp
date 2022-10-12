@@ -112,12 +112,12 @@ class RecipeCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.work),
+                      Icon(Icons.star_border),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "${recipes.items[recipeId].n_ingredients}",
+                        "${recipes.items[recipeId].rating}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -132,12 +132,12 @@ class RecipeCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.attach_money),
+                      Icon(Icons.people_outline),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "${recipes.items[recipeId].n_steps}",
+                        "${recipes.items[recipeId].review_count}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

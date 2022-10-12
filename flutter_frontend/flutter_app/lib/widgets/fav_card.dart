@@ -112,12 +112,12 @@ class FavoriteCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.work),
+                      Icon(Icons.star),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "${recipes.favitems[recipeId].n_ingredients}",
+                        "${recipes.favitems[recipeId].rating}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -132,12 +132,12 @@ class FavoriteCard extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(Icons.attach_money),
+                      Icon(Icons.countertops),
                       SizedBox(
                         width: 5,
                       ),
                       Text(
-                        "${recipes.favitems[recipeId].n_steps}",
+                        "${recipes.favitems[recipeId].review_count}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

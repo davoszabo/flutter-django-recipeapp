@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  model:
+    build: ./docker
+    container_name: food_predict_model
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/opt/notebooks
+    stdin_open: true
+    tty: true
