@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/recipes.dart';
+import 'package:flutter_app/providers/recommendations.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/recipe_details_screen.dart';
-import '../providers/favorites.dart';
+import '../providers/recommendations.dart';
 
-class FavoriteCard extends StatelessWidget {
+class RecommendCard extends StatelessWidget {
   final int recipeId;
 
-  FavoriteCard(this.recipeId);
+  RecommendCard(this.recipeId);
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,11 @@ class FavoriteCard extends StatelessWidget {
     //   context,
     //   listen: false,
     // ).findById(recipeId);
-    final recipes = Provider.of<Favorites>(context);
+    final recipes = Provider.of<Recommendations>(context);
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(RecipeDetailsScreen.route,
-            arguments: recipes.favitems[recipeId].id // data.items[index].id,
+            arguments: recipes.recitems[recipeId].id // data.items[index].id,
             );
       },
       // child: Card(
@@ -46,7 +47,7 @@ class FavoriteCard extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15)),
-                  child: (recipes.favitems[recipeId].image_url) == null
+                  child: (recipes.recitems[recipeId].image_url) == null
                       ? Image.network(
                           "https://render.fineartamerica.com/images/rendered/default/greeting-card/images-medium-5/sad-food-face-science-photo-library.jpg?&targetx=-25&targety=0&imagewidth=751&imageheight=500&modelwidth=700&modelheight=500&backgroundcolor=ECE9E6&orientation=0",
                           height: 250,
@@ -54,7 +55,7 @@ class FavoriteCard extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       : Image.network(
-                          recipes.favitems[recipeId].image_url,
+                          recipes.recitems[recipeId].image_url,
                           height: 250,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -72,7 +73,7 @@ class FavoriteCard extends StatelessWidget {
                             topRight: Radius.circular(15))),
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: Text(
-                      recipes.favitems[recipeId].name,
+                      recipes.recitems[recipeId].name,
                       style: TextStyle(
                         fontSize: 26,
                         color: Colors.white,
@@ -97,7 +98,7 @@ class FavoriteCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        '${recipes.favitems[recipeId].minutes}',
+                        '${recipes.recitems[recipeId].minutes}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -117,7 +118,7 @@ class FavoriteCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "${recipes.favitems[recipeId].rating}",
+                        "${recipes.recitems[recipeId].rating}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -137,7 +138,7 @@ class FavoriteCard extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        "${recipes.favitems[recipeId].review_count}",
+                        "${recipes.recitems[recipeId].review_count}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

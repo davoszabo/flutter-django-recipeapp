@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/auth.dart';
+import 'package:flutter_app/screens/recipe_details_screen2.dart';
 import 'package:flutter_app/screens/recipes_screen.dart';
 import 'package:flutter_app/screens/search_screen.dart';
 import 'package:provider/provider.dart';
@@ -9,15 +10,17 @@ import 'screens/auth_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/tabs_screen.dart';
 import 'screens/recipe_details_screen.dart';
+import 'screens/recipe_details_screen2.dart';
 import 'screens/filter_screen.dart';
 // import 'screens/fetch_test.dart';
 
 // Providers
 import './providers/recipes.dart';
-import './providers/cuisines.dart';
 import './providers/auth.dart';
 import './providers/favorites.dart';
+import './providers/recommendations.dart';
 import './providers/filters.dart';
+import './providers/settings.dart';
 
 // Theme
 import './common/theme.dart';
@@ -42,8 +45,18 @@ class MainApp extends StatelessWidget {
               auth.getUserId,
               previousProducts == null ? [] : previousProducts.favitems),
         ),
+        // ignore: missing_required_param
+        ChangeNotifierProxyProvider<Auth, Recommendations>(
+          update: (ctx, auth, previousProducts) => Recommendations(
+              auth.token,
+              auth.getUserId,
+              previousProducts == null ? [] : previousProducts.recitems),
+        ),
         ChangeNotifierProvider(
           create: (_) => Filters(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Settings(),
         ),
       ],
       // child: Consumer<Auth>(
@@ -78,6 +91,7 @@ class MainApp extends StatelessWidget {
         home: TabsScreen(),
         routes: {
           RecipeDetailsScreen.route: (ctx) => RecipeDetailsScreen(),
+          RecipeDetailsScreen2.route: (ctx) => RecipeDetailsScreen2(),
           SearchScreen.route: (ctx) => SearchScreen(),
           FilterScreen.route: (ctx) => FilterScreen(),
           // MealDetailScreen.route: (ctx) => MealDetailScreen(_toggleFavourite, _isMealFavourite),

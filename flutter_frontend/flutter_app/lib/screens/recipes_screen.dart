@@ -9,6 +9,7 @@ import '../providers/recipes.dart';
 import '../providers/filters.dart';
 
 import '../widgets/recipe_card.dart';
+import '../widgets/recipe_card2.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/search_bar2.dart';
 
@@ -61,6 +62,16 @@ class RecipesScreenState extends State<RecipesScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: Text("Recipe App",
+            style: TextStyle(
+                // fontFamily: 'inter',
+                fontWeight: FontWeight.w600,
+                fontSize: 24)),
+      ),
+      // backgroundColor: Colors.black12,
       body: Center(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -123,22 +134,26 @@ class RecipesScreenState extends State<RecipesScreen>
                       //   ),
                       // ),
                       SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SearchBar2(),
-                        ),
+                        child: SearchBar2(),
+                        // child: Container(
+                        //   // color: Colors.red,
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(5.0),
+                        //     child: SearchBar2(),
+                        //   ),
+                        // ),
                       ),
-                      Divider(
-                        thickness: 2,
-                        height: 0,
-                      ),
+                      // Divider(
+                      //   thickness: 2,
+                      //   height: 0,
+                      // ),
                       Expanded(
                         child: ListView.builder(
                           // shrinkWrap: true,
                           itemCount: data.items.length,
                           itemBuilder: (context, index) {
                             // print(data.items.length);
-                            return RecipeCard(index);
+                            return RecipeCard2(index);
                           },
                         ),
                       ),

@@ -29,14 +29,18 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         // The search area here
         title: Container(
           width: double.infinity,
-          height: 40,
+          height: 50,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
           child: Center(
             child: TextField(
+              autofocus: true,
               controller: _searchTextController,
               decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),

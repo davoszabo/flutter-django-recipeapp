@@ -84,7 +84,7 @@ class _FilterScreenState extends State<FilterScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildSection("Mealtime", originalFilters),
+              buildSection("Meal-time", originalFilters),
               buildSection("Health", originalFilters),
               buildSection("Allergenic", originalFilters),
               buildSection("Ingredient", originalFilters),

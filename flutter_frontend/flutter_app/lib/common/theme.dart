@@ -15,11 +15,11 @@ final appTheme = ThemeData(
             fontSize: 20,
             fontFamily: 'RobotoCondensed',
             fontWeight: FontWeight.bold,
-            color: Colors.white),
+            color: Colors.white,),
         headline5: TextStyle(
             fontSize: 24,
             fontFamily: 'RobotoCondensed',
             fontWeight: FontWeight.bold,
-            color: Colors.black),
+            color: Colors.black,),
       ),
 );

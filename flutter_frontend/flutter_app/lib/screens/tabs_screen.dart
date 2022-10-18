@@ -6,11 +6,12 @@ import 'package:flutter_app/screens/settings_screen.dart';
 import 'package:flutter_app/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'recipes_screen.dart';
+import './recipes_screen.dart';
 import './favorites_screen.dart';
 import './recommend_screen.dart';
 import './settings_screen.dart';
-import './fetch_test.dart';
+
+import '../widgets/auth_checker.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -19,10 +20,40 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   final List<Widget> pages = [
-    // FetchTestScreen(),
+    // Recipes Screen
     RecipesScreen(),
-    FavoritesScreen(),
-    RecommendScreen(),
+    // Favorites Screen
+    // Consumer<Auth>(
+    //   builder: (ctx, auth, _) {
+    //     return auth.isAuth
+    //         ? FavoritesScreen()
+    //         : FutureBuilder(
+    //             future: auth.tryAutoLogin(),
+    //             builder: (ctx, authResultSnapshot) => (auth.isAuth &&
+    //                     authResultSnapshot.connectionState ==
+    //                         ConnectionState.waiting)
+    //                 ? SplashScreen()
+    //                 : AuthScreen(),
+    //           );
+    //   },
+    // ),
+    AuthChecker(FavoritesScreen()),
+    // Recommend Screen
+    Consumer<Auth>(
+      builder: (ctx, auth, _) {
+        return auth.isAuth
+            ? RecommendScreen()
+            : FutureBuilder(
+                future: auth.tryAutoLogin(),
+                builder: (ctx, authResultSnapshot) => (auth.isAuth &&
+                        authResultSnapshot.connectionState ==
+                            ConnectionState.waiting)
+                    ? SplashScreen()
+                    : AuthScreen(),
+              );
+      },
+    ),
+    // Settings Screen
     Consumer<Auth>(
       builder: (ctx, auth, _) {
         return auth.isAuth
@@ -67,15 +98,15 @@ class _TabsScreenState extends State<TabsScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_rounded),
+            icon: Icon(Icons.food_bank_outlined),
             label: 'Recipes',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+            icon: Icon(Icons.bookmark_outline),
             label: 'Favorites',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.recommend),
+            icon: Icon(Icons.recommend_sharp),
             label: 'Recommended',
           ),
           BottomNavigationBarItem(

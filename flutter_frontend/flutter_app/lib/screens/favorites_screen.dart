@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/favorites.dart';
-import 'package:flutter_app/providers/recipes.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/favorites.dart';
 
 import '../widgets/fav_card.dart';
+import '../widgets/fav_card2.dart';
 
 class FavoritesScreen extends StatefulWidget {
   @override
@@ -29,6 +29,15 @@ class FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     // print("ASD");
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: Text("Favorites",
+            style: TextStyle(
+                // fontFamily: 'inter',
+                fontWeight: FontWeight.w600,
+                fontSize: 24)),
+      ),
       body: Center(
         child: FutureBuilder(
           future: futureData,
@@ -43,7 +52,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                   itemCount: data.favitems.length,
                   itemBuilder: (context, index) {
                     // print(data.items.length);
-                    return FavoriteCard(index);
+                    return FavoriteCard2(index);
                   },
                 ),
               );
