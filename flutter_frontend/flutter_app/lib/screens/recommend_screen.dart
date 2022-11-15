@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/recommendations.dart';
+import '../providers/settings.dart';
 
 import '../widgets/rec_card2.dart';
 
@@ -14,7 +15,9 @@ class RecommendScreenState extends State<RecommendScreen> {
   Future futureData;
 
   Future obtainFutureData() {
-    return Provider.of<Recommendations>(context, listen: false).fetchRecData();
+    final settings = Provider.of<Settings>(context, listen: false);
+    return Provider.of<Recommendations>(context, listen: false)
+        .fetchRecData(settings.getValueById("enableSVD") == 0 ? "KNN" : "SVD");
   }
 
   @override

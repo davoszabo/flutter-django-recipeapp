@@ -5,9 +5,15 @@ import '../models/setting.dart';
 class Settings with ChangeNotifier {
   List<Setting> _settings = [
     Setting(
-        id: "showOnlyWithImage",
-        display_name: "Show recipes only with image",
-        value: 0),
+      id: "showOnlyWithImage",
+      display_name: "Show recipes only with image (restricted to home screen)",
+      value: 0,
+    ),
+    Setting(
+      id: "enableSVD",
+      display_name: "Enable SVD recommendation",
+      value: 0,
+    ),
   ];
 
   int _getSettingIdxById(String settingId) {

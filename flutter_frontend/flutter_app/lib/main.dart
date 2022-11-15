@@ -6,13 +6,9 @@ import 'package:flutter_app/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
 // Screens
-import 'screens/auth_screen.dart';
-import 'screens/splash_screen.dart';
 import 'screens/tabs_screen.dart';
-import 'screens/recipe_details_screen.dart';
 import 'screens/recipe_details_screen2.dart';
 import 'screens/filter_screen.dart';
-// import 'screens/fetch_test.dart';
 
 // Providers
 import './providers/recipes.dart';
@@ -90,7 +86,6 @@ class MainApp extends StatelessWidget {
         theme: appTheme,
         home: TabsScreen(),
         routes: {
-          RecipeDetailsScreen.route: (ctx) => RecipeDetailsScreen(),
           RecipeDetailsScreen2.route: (ctx) => RecipeDetailsScreen2(),
           SearchScreen.route: (ctx) => SearchScreen(),
           FilterScreen.route: (ctx) => FilterScreen(),

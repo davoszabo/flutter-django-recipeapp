@@ -30,20 +30,25 @@ class Recipes with ChangeNotifier {
     print(finalUrl);
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
     // print(url);
-    final response =
-        await http.get(finalUrl, headers: {"Accept": "application/json"});
+    try {
+      final response = await http.get(finalUrl, headers: {
+        "Accept": "application/json"
+      }).timeout(const Duration(seconds: 10));
 
-    // print(response.statusCode);
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
+      // print(response.statusCode);
+      if (response.statusCode == 200) {
+        List jsonResponse = json.decode(response.body);
 
-      // jsonResponse.forEach((element) => print(element['name']));
+        // jsonResponse.forEach((element) => print(element['name']));
 
-      _items = jsonResponse.map((data) => new Recipe.fromJson(data)).toList();
+        _items = jsonResponse.map((data) => new Recipe.fromJson(data)).toList();
 
-      notifyListeners();
-    } else {
-      throw Exception('Unexpected error occured!');
+        notifyListeners();
+      } else {
+        throw Exception('Unexpected error occured!');
+      }
+    } on TimeoutException catch (error) {
+      throw error;
     }
   }
 

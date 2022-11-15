@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../common/app_color.dart';
 
-import '../screens/recipe_details_screen.dart';
 import '../screens/recipe_details_screen2.dart';
 
 import '../providers/recipes.dart';

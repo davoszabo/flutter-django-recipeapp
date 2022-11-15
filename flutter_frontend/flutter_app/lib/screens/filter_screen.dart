@@ -80,6 +80,16 @@ class _FilterScreenState extends State<FilterScreen> {
     //     .isEmpty);
     final originalFilters = Provider.of<Filters>(context);
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Filters",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 24,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

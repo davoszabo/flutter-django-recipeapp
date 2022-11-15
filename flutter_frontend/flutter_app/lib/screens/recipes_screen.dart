@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/recipes.dart';
 import 'package:provider/provider.dart';
-
-import './recipe_details_screen.dart';
-import './search_screen.dart';
 
 import '../providers/recipes.dart';
 import '../providers/filters.dart';
 
-import '../widgets/recipe_card.dart';
 import '../widgets/recipe_card2.dart';
-import '../widgets/search_bar.dart';
 import '../widgets/search_bar2.dart';
 
 class RecipesScreen extends StatefulWidget {

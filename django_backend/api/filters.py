@@ -15,7 +15,7 @@ class RecipeFilter(django_filters.FilterSet):
         print(value)
         q_list = Q()
         for q in value.split(' '):
-            q_list |= (Q(tags__icontains=q))
+            q_list &= (Q(tags__icontains=q))
         filtered_list = queryset.filter(q_list)
         return filtered_list
 

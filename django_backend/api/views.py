@@ -26,7 +26,7 @@ class RecipeViewSet(viewsets.ViewSet):
         #queryset = Recipe.objects.all()#.order_by('?')[:10]
         print(request.GET)
         filter_query = RecipeFilter(request.GET, queryset=Recipe.objects.all().order_by("?"))
-        serializer = RecipeListSerializer(filter_query.qs[:30], many=True)
+        serializer = RecipeListSerializer(filter_query.qs[:100], many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -87,7 +87,9 @@ class RecommendListView(viewsets.ViewSet):
     def list(self, request):
         
         # rec_list = recsys_model.fit(request.user)
-        
+        rec_system = request.GET.get('recSys')
+        print(rec_system)
+
         user_id = request.user.id
         base_id = 1853000000
         rec_id = user_id + base_id
@@ -100,10 +102,17 @@ class RecommendListView(viewsets.ViewSet):
         liked_recipes_list = list(profile.favorites.values_list('pk', flat=True))
         print("[RecommendListView::list] the user favorite recipe IDs: ", liked_recipes_list)
         
-        if(not recsys_model.trainset_contains(rec_id)):
-            recsys_model.train(rec_id, liked_recipes_list)
+        # if(not recsys_model.trainset_contains(rec_id)):
+        #     recsys_model.train(rec_id, liked_recipes_list)
+        recsys_model.train(rec_id, liked_recipes_list, rec_system)
         
-        rec_list = recsys_model.fit(rec_id)
+
+        # rec_list = recsys_model.fit_knn(rec_id)
+        if rec_system == "SVD":
+            rec_list = recsys_model.fit_svd(rec_id)
+        elif rec_system == "KNN":
+            rec_list = recsys_model.fit_knn(rec_id)
+
         
         
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(rec_list)])

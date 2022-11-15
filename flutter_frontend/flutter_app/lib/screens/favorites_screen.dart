@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/favorites.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/favorites.dart';
 
-import '../widgets/fav_card.dart';
 import '../widgets/fav_card2.dart';
 
 class FavoritesScreen extends StatefulWidget {

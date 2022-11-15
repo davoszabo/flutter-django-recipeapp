@@ -21,8 +21,10 @@ class Recommendations with ChangeNotifier {
 
   final url = Globals.url;
 
-  Future<void> fetchRecData() async {
-    final finalUrl = Uri.parse('$url/api/recommendations/?format=json');
+  Future<void> fetchRecData(String recSys) async {
+    print(recSys);
+    final finalUrl =
+        Uri.parse('$url/api/recommendations/?format=json&recSys=$recSys');
     // final url = Uri.parse('http://10.0.2.2:8000/api/recipes/?format=json');
     // print(url);
     final response = await http.get(finalUrl, headers: {
