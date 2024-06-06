@@ -1,10 +1,47 @@
 # Overview
-
 A mobile application for recipe recommendations. Huge recipe datasets trained for different recommendation system algorithms using collaboration (user) based filtering. Algorithms like k-Nearest Neighbor (kNN), Singular Value Decomposition (SVD), used to examine efficiency, and time cost in different sized datasets. Raw data needed to be finalized and manipulated to a solid form. Full-stack mobile application made to test out in a production-like environment.
 
 ### Used tools
-
 - Flutter frontend
 - Django backend and API, integration of trained ML model.
 - PostgreSQL database
 - Python machine learning, data manipulation tools and libraries.
+
+# Getting started
+The installation consist of several parts: Download datasets, refine them, run backend, import database, etc. This phase will go through how to make it running on your system.
+
+## Data refinement
+In `model/notebooks/datasets` you will find links that redirects to Kaggle. This is where the recipe database is coming from and they need to be saved in the `datasets` folder. This instruction won't go through how the dataset merge, refinement and sampling works. The notebooks contains enough information about that.
+
+### Notebooks
+Start Jupyter Notebook:
+```
+cd model
+
+docker-compose -f docker-compose-model.yaml up
+```
+Connect to the platform. The address, port and token are visible from the container output.
+
+The following notebooks are used to create the database, which has been formatted for use. It is important to run them in this order!
+
+> [!NOTE]
+> There might be issues with the notebooks, because they are no longer maintained. Please get your bearings from the information in the files!
+
+1. recipes_refine1-merge.ipynb
+2. recipes_refine2-characteristic.ipynb
+3. recipes_sampling.ipynb
+4. recipes_sampling_quick-refine.ipynb
+
+## Train model (Optional)
+This is where the recipe recommendation system (RecRecSys) development, experimentation and polishing play a role. Take a look at the file: `recipes_model-reviews.ipynb`. Partly the model, and the training functionality has been integrated into the Django backend, so here only further improvement should happen.
+
+The algorithms reviewed so far include KNN (K-Nearest Neighbor) and SVD (Singular Value Decomposition).
+
+## Run Django backend
+`COMING SOON`
+
+## Import database
+`COMING SOON`
+
+## Connecting Flutter frontend
+`COMING SOON`
