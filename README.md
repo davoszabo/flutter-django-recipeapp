@@ -15,6 +15,8 @@ In `model/notebooks/datasets` you will find links that redirects to Kaggle. This
 
 ### Notebooks
 Start Jupyter Notebook:
+> [!IMPORTANT]
+> This is a computational heavy platform so it is recommended to use at least 8 GB RAM and 4 cores.
 ```
 cd model
 
@@ -30,7 +32,8 @@ The following notebooks are used to create the database, which has been formatte
 1. recipes_refine1-merge.ipynb
 2. recipes_refine2-characteristic.ipynb
 3. recipes_sampling.ipynb
-4. recipes_sampling_quick-refine.ipynb
+
+You can leave the `recipes_sampling_quick-refine.ipynb` file.
 
 ## Train model (Optional)
 This is where the recipe recommendation system (RecRecSys) development, experimentation and polishing play a role. Take a look at the file: `recipes_model-reviews.ipynb`. Partly the model, and the training functionality has been integrated into the Django backend, so here only further improvement should happen.
@@ -38,9 +41,23 @@ This is where the recipe recommendation system (RecRecSys) development, experime
 The algorithms reviewed so far include KNN (K-Nearest Neighbor) and SVD (Singular Value Decomposition).
 
 ## Run Django backend
-`COMING SOON`
+> [!NOTE]
+> Production environment did not tested!
+
+```
+docker-compose up -d
+```
+
+Access the backend via `127.0.0.1:8000/admin`. To create a new admin user you have to run this command inside the container:
+```
+docker exec -it django_app bash -c "python manage.py createsuperuser"
+```
+
+Fill in the prompts with your user credentials.
 
 ## Import database
+You'll see that the Recipes model is completely empty. This is where the previously generated .csv file is getting handy. 
+
 `COMING SOON`
 
 ## Connecting Flutter frontend
