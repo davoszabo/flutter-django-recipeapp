@@ -35,6 +35,8 @@ The following notebooks are used to create the database, which has been formatte
 
 You can leave the `recipes_sampling_quick-refine.ipynb` file.
 
+The sampling part will make a test database with 25k lines if recipes. 
+
 ## Train model (Optional)
 This is where the recipe recommendation system (RecRecSys) development, experimentation and polishing play a role. Take a look at the file: `recipes_model-reviews.ipynb`. Partly the model, and the training functionality has been integrated into the Django backend, so here only further improvement should happen.
 
@@ -58,7 +60,24 @@ Fill in the prompts with your user credentials.
 ## Import database
 You'll see that the Recipes model is completely empty. This is where the previously generated .csv file is getting handy. 
 
-`COMING SOON`
+Copy sample dataset to postgres container:
+```
+docker cp model/notebooks/datasets/sample/recipes_sample_main.csv postgres_db:/tmp
+```
+Exec into postgres container and enter to the database:
+```
+docker exec -it postgres_db bash
+
+psql -U postgres -w postgres
+```
+Import database:
+> [!IMPORTANT]
+> The refinement for the dataset is not 100% covered. If a message telling "ERROR:  malformed array literal:" You should search for that mentioned element and remove the whole row in the .csv file!
+```
+\copy api_recipe FROM '/tmp/recipes_sample_main.csv' DELIMITER ';' CSV HEADER
+```
+
+If everything worked fine, you are good to go!
 
 ## Connecting Flutter frontend
 `COMING SOON`
