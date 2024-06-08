@@ -21,7 +21,7 @@ services:
     container_name: django_app
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./:/usr/src/app/
+     - ./:/usr/src/app/
     # environment:
     #   - POSTGRES_NAME=postgres
     #   - POSTGRES_USER=postgres
@@ -40,7 +40,7 @@ services:
     image: postgres:11
     container_name: postgres_db
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -52,8 +52,8 @@ services:
 
   pgadmin:
     container_name: pgadmin4
-    image: dpage/pgadmin4
-    restart: always
+    image: dpage/pgadmin4:6.15
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
@@ -67,7 +67,7 @@ services:
     #   backend:
     #     driver: bridge
 
-    # volumes:
-    #   postgres_data:
+volumes:
+  postgres_data:
     # static_volume:
     # media_volume:

@@ -1,4 +1,4 @@
-FROM continuumio/anaconda3
+FROM continuumio/anaconda3:2022.10
 
 RUN conda install jupyter -y --quiet && \
     conda install -c conda-forge scikit-surprise && \

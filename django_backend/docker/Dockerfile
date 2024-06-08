@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3
+FROM python:3.10
 
 # set work directory
 WORKDIR /usr/src/app
@@ -13,7 +13,7 @@ ENV PYTHONUNBUFFERED 1
 #     apt-get install postgresql-dev gcc python3-dev musl-dev
 
 RUN apt-get update && \
-    apt-get install -y netcat && \
+    apt-get install -y netcat-traditional && \
     rm -rf /var/lib/apt/lists/*
 
 # install dependencies
@@ -29,8 +29,8 @@ RUN pip install scikit-surprise
 # RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh && \
 #     chmod +x /usr/src/app/entrypoint.sh
 
-# # copy project
-# COPY . .
+# copy project
+COPY . .
 
 # # run entrypoint.sh
 ENTRYPOINT ["./docker/entrypoint.sh"]
