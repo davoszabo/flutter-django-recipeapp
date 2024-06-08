@@ -41,8 +41,15 @@ You can leave the `recipes_sampling_quick-refine.ipynb` file.
 
 The sampling part will make a test database with 25k lines if recipes. 
 
-## Train model (Optional)
-This is where the recipe recommendation system (RecRecSys) development, experimentation and polishing play a role. Take a look at the file: `recipes_model-reviews.ipynb`. Partly the model, and the training functionality has been integrated into the Django backend, so here only further improvement should happen.
+## Train model
+This is where the recipe recommendation system (RecRecSys) development, experimentation and polishing play a role. Take a look at the file: `recipes_model-reviews.ipynb`. Here only further improvement and testing should happen.
+
+You need to run the `recipe_model-reviews.ipynb` to get the followings from your *sample database*:
+- recipe_ratings.pkl
+- recrecsys.pkl
+- trainset.pkl
+
+Copy or overwrite these pickled (serialized) files to `django_backend/recsys/` folder.
 
 The algorithms reviewed so far include KNN (K-Nearest Neighbor) and SVD (Singular Value Decomposition).
 
