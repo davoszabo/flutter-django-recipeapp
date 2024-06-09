@@ -10,3 +10,7 @@ adb connect host.docker.internal:5555
 # Connect frontend container to host machine on port 8000 (Django backend)
 # If you are using real device, you have to set up: Network & Internet setting > connected WiFi name > Set public to private 
 adb reverse tcp:8000 tcp:8000
+
+# If you want to run via web-server:
+flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8800
+
