@@ -5,5 +5,6 @@
     "dart-code.dart-code",
     "dart-code.flutter"
   ],
-  "postStartCommand": "adb connect 192.168.0.111:5555"
+  "appPort": [ "8800:8800" ]
+//  "postStartCommand": "adb connect 192.168.0.111:5555"
 }
